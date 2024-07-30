@@ -27,10 +27,7 @@ from .errors import MissingBookFileError
 from .errors import MissingVerseFileError
 from .errors import VersionMissingVerseError
 from .formatter import format_scripture_references
-from .formatter import format_scripture_text
 from .formatter import format_single_reference
-from .formatter import get_book_titles
-from .formatter import get_verse_text
 from .normalized_reference import NormalizedReference
 from .parser import get_references
 from .parser import normalize_reference
