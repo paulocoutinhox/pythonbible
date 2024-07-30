@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Type
+from typing import Any
+from typing import Type
 
 
 def _build_book_regular_expression(
@@ -21,31 +22,32 @@ def _add_suffix(regex: str, suffix: str | None = None) -> str:
 
 
 _SAMUEL_REGULAR_EXPRESSION = r"(Samuel|Sam\.*|Sa\.*|Sm\.*)"
-_KINGS_REGULAR_EXPRESSION = r"(Kings|Kgs\.*|Kin\.*|Ki\.*|Reyes|Reis|Re\.*|R\.*)"
-_CHRONICLES_REGULAR_EXPRESSION = r"(Chronicles|Chron\.*|Chro\.*|Chr\.*|Ch\.*|Crónicas|Crônicas|Cr\.*|1Cr|2Cr|I Cr|II Cr|1 Cr|2 Cr)"
-_JOHN_REGULAR_EXPRESSION = r"(John|Joh\.*|Jhn\.*|Jo\.*(?!shua|b|nah|el)|Jn\.*|Juan|João|J\.*|Jão)"
-_CORINTHIANS_REGULAR_EXPRESSION = r"Co\.*(?:r\.*(?:inthians)?)?|Corintios|Coríntios|1Co|2Co|I Co|II Co|1 Co|2 Co"
-_THESSALONIANS_REGULAR_EXPRESSION = r"Th\.*(?:(s|(es(?:s)?))\.*(?:alonians)?)?|Tesalonicenses|Tessalonicenses|1Th|2Th|I Th|II Th|1 Th|2 Th"
-_TIMOTHY_REGULAR_EXPRESSION = r"Ti\.*(?:m\.*(?:othy)?)?|Timoteo|Timóteo|1Ti|2Ti|I Ti|II Ti|1 Ti|2 Ti"
-_PETER_REGULAR_EXPRESSION = r"(Pe\.*(?:t\.*(?:er)?)?|Pt\.*|Pedro|1Pe|2Pe|I Pe|II Pe|1 Pe|2 Pe)"
-_MACCABEES_REGULAR_EXPRESSION = r"(Maccabees|Macc\.*|Mac\.*|Ma\.*|M\.*|Macabeos|Macabeus|1Ma|2Ma|I Ma|II Ma|1 Ma|2 Ma)"
+_KINGS_REGULAR_EXPRESSION = r"(Kings|Kgs\.*|Kin\.*|Ki\.*|Reyes|Reis|Re\.*|Rs\.*)"
+_CHRONICLES_REGULAR_EXPRESSION = r"(Chronicles|Chron\.*|Chro\.*|Chr\.*|Crónicas|Crônicas|Cr\.*)"
+_JOHN_REGULAR_EXPRESSION = r"(John|Joh\.*|Jhn\.*|Jo\.*(?!shua|b|nah|el)|Jn\.*|Juan|João|Jn\.*)"
+_CORINTHIANS_REGULAR_EXPRESSION = r"(Corinthians|Corintios|Coríntios|Co\.*)"
+_THESSALONIANS_REGULAR_EXPRESSION = r"(Thessalonians|Tesalonicenses|Tessalonicenses|Th\.*)"
+_TIMOTHY_REGULAR_EXPRESSION = r"(Timothy|Timoteo|Timóteo|Ti\.*)"
+_PETER_REGULAR_EXPRESSION = r"(Peter|Pedro|Pe\.*|Pt\.*)"
 
-_FIRST = r"1|I\s+|1st\s+|First\s+|Primera|Primer|Primeira|Primeiro"
-_SECOND = r"2|II|2nd\s+|Second\s+|Segunda|Segundo"
-_THIRD = r"3|III|3rd\s+|Third\s+|Tercera|Tercero|Terceira|Terceiro"
+_MACCABEES_REGULAR_EXPRESSION = r"(Maccabees|Macabeos|Macabeus|Ma\.*|M\.*)"
 
-_FIRST_BOOK = rf"{_FIRST}|(First\s+Book\s+of(?:\s+the)?)|(Primer\s+Libro\s+de(?:\s+la)?)|(Primeiro\s+Livro\s+de(?:\s+o)?)"
-_SECOND_BOOK = rf"{_SECOND}|(Second\s+Book\s+of(?:\s+the)?)|(Segundo\s+Libro\s+de(?:\s+la)?)|(Segundo\s+Livro\s+de(?:\s+o)?)"
+_FIRST = r"1|I\s+|1st\s+|First\s+|Primero\s+|Primeiro\s+|1\s+"
+_SECOND = r"2|II|2nd\s+|Second\s+|Segundo\s+|2\s+"
+_THIRD = r"3|III|3rd\s+|Third\s+|Tercero\s+|Terceiro\s+|3\s+"
 
-_EPISTLE_OF_PAUL_TO = r"Epistle\s+of\s+Paul\s+(?:the\s+Apostle\s+)?to(?:\s+the)?|Epístola\s+de\s+Pablo\s+a(?:\s+la)?|Epístola\s+de\s+Paulo\s+a(?:\s+o)?"
-_GENERAL_EPISTLE_OF = r"(?:General\s+)?Epistle\s+(?:General\s+)?of|Epístola\s+General\s+de|Epístola\s+Geral\s+de"
+_FIRST_BOOK = rf"{_FIRST}|(First\s+Book\s+of(?:\s+the)?)"
+_SECOND_BOOK = rf"{_SECOND}|(Second\s+Book\s+of(?:\s+the)?)"
 
-_FIRST_PAUL_EPISTLE = rf"{_FIRST}|(First\s+{_EPISTLE_OF_PAUL_TO})|(Primera\s+{_EPISTLE_OF_PAUL_TO})|(Primeira\s+{_EPISTLE_OF_PAUL_TO})"
-_SECOND_PAUL_EPISTLE = rf"{_SECOND}|(Second\s+{_EPISTLE_OF_PAUL_TO})|(Segunda\s+{_EPISTLE_OF_PAUL_TO})|(Segunda\s+{_EPISTLE_OF_PAUL_TO})"
+_EPISTLE_OF_PAUL_TO = r"Epistle\s+of\s+Paul\s+(?:the\s+Apostle\s+)?to(?:\s+the)?"
+_GENERAL_EPISTLE_OF = r"(?:General\s+)?Epistle\s+(?:General\s+)?of"
 
-_FIRST_GENERAL_EPISTLE = rf"{_FIRST}|(First\s+{_GENERAL_EPISTLE_OF})|(Primera\s+{_GENERAL_EPISTLE_OF})|(Primeira\s+{_GENERAL_EPISTLE_OF})"
-_SECOND_GENERAL_EPISTLE = rf"{_SECOND}|(Second\s+{_GENERAL_EPISTLE_OF})|(Segunda\s+{_GENERAL_EPISTLE_OF})|(Segunda\s+{_GENERAL_EPISTLE_OF})"
-_THIRD_GENERAL_EPISTLE = rf"{_THIRD}|(Third\s+{_GENERAL_EPISTLE_OF})|(Tercera\s+{_GENERAL_EPISTLE_OF})|(Terceira\s+{_GENERAL_EPISTLE_OF})"
+_FIRST_PAUL_EPISTLE = rf"{_FIRST}|(First\s+{_EPISTLE_OF_PAUL_TO})"
+_SECOND_PAUL_EPISTLE = rf"{_SECOND}|(Second\s+{_EPISTLE_OF_PAUL_TO})"
+
+_FIRST_GENERAL_EPISTLE = rf"{_FIRST}|(First\s+{_GENERAL_EPISTLE_OF})"
+_SECOND_GENERAL_EPISTLE = rf"{_SECOND}|(Second\s+{_GENERAL_EPISTLE_OF})"
+_THIRD_GENERAL_EPISTLE = rf"{_THIRD}|(Third\s+{_GENERAL_EPISTLE_OF})"
 
 
 class Book(Enum):
@@ -96,23 +98,23 @@ class Book(Enum):
     def abbreviations(self: Book) -> tuple[str, ...]:
         return self._abbreviations_
 
-    GENESIS = 1, "Genesis", r"Gen\.*(?:esis)?|Génesis|Gênesis", ("Gen", "Gn")
-    EXODUS = 2, "Exodus", r"Exo\.*(?:d\.*)?(?:us)?|Éxodo|Êxodo", ("Exo", "Exod", "Ex")
-    LEVITICUS = 3, "Leviticus", r"Lev\.*(?:iticus)?|Levítico|Levítico", ("Lev", "Lv")
-    NUMBERS = 4, "Numbers", r"Num\.*(?:bers)?|Números|Números", ("Num", "Nm")
-    DEUTERONOMY = 5, "Deuteronomy", r"Deu\.*(?:t\.*)?(?:eronomy)?|Deuteronomio|Deuteronômio", ("Deu", "Deut", "Dt")
-    JOSHUA = 6, "Joshua", r"(Joshua|Josh\.*|Jos\.*|Jsh\.*)|Josué|Josué", ("Jos", "Jsh", "Josh", "Js")
-    JUDGES = 7, "Judges", r"(Judges|Judg\.*|Jdgs\.*|Jdg\.*)|Jueces|Juízes", ("Jdg", "Jdgs", "Judg", "Jz")
-    RUTH = 8, "Ruth", r"(Ruth|Rut\.*|Rth\.*)|Rut|Rute", ("Rth", "Rut", "Rt")
+    GENESIS = 1, "Genesis", r"(Gen\.*(?:esis)?|Gén\.*(?:esis)?|Gên\.*(?:esis)?|Gn\.*)", ("Gen", "Gn")
+    EXODUS = 2, "Exodus", r"(Exo\.*(?:d\.*)?(?:us)?|Éxo\.*(?:do)?|Êxo\.*(?:do)?|Éx|Ex\.*)", ("Exo", "Exod", "Éx", "Ex")
+    LEVITICUS = 3, "Leviticus", r"(Lev\.*(?:iticus)?|Lev\.*(?:ítico)?|Lv\.*)", ("Lev", "Lv")
+    NUMBERS = 4, "Numbers", r"(Num\.*(?:bers)?|Num\.*(?:eros)?|Núm\.*|Nm\.*)", ("Num", "Núm", "Nm")
+    DEUTERONOMY = 5, "Deuteronomy", r"(Deu\.*(?:t\.*)?(?:eronomy)?|Deu\.*(?:teronomio)?|Dt\.*)", ("Deu", "Deut", "Dt")
+    JOSHUA = 6, "Joshua", r"(Joshua|Josh\.*|Jos\.*|Jsh\.*|Josué|Js\.*)", ("Jos", "Jsh", "Josh", "Js")
+    JUDGES = 7, "Judges", r"(Judges|Judg\.*|Jdgs\.*|Jdg\.*|Jueces|Jue\.*|Jz\.*)", ("Jdg", "Jdgs", "Judg", "Jue", "Jz")
+    RUTH = 8, "Ruth", r"(Ruth|Rut\.*|Rth\.*|Rt\.*)", ("Rth", "Rut", "Rt")
     SAMUEL_1 = (
         9,
         "1 Samuel",
         _build_book_regular_expression(
             _SAMUEL_REGULAR_EXPRESSION,
             prefix=_FIRST_BOOK,
-            suffix=r"Otherwise\s+Called\s+The\s+First\s+Book\s+of\s+the\s+Kings|Primer\s+Libro\s+de\s+Samuel|Primeiro\s+Livro\s+de\s+Samuel",
+            suffix=r"Otherwise\s+Called\s+The\s+First\s+Book\s+of\s+the\s+Kings",
         ),
-        ("Sa", "Sam", "Sm", "1 Sam", "1 S", "I Sam", "I S", "1Sa", "1S", "ISa", "IS"),
+        ("Sa", "Sam", "Sm", "1Sm"),
     )
     SAMUEL_2 = (
         10,
@@ -120,9 +122,9 @@ class Book(Enum):
         _build_book_regular_expression(
             _SAMUEL_REGULAR_EXPRESSION,
             prefix=_SECOND_BOOK,
-            suffix=r"Otherwise\s+Called\s+The\s+Second\s+Book\s+of\s+the\s+Kings|Segundo\s+Libro\s+de\s+Samuel|Segundo\s+Livro\s+de\s+Samuel",
+            suffix=r"Otherwise\s+Called\s+The\s+Second\s+Book\s+of\s+the\s+Kings",
         ),
-        ("Sa", "Sam", "Sm", "2 Sam", "2 S", "II Sam", "II S", "2Sa", "2S", "IISa", "IIS"),
+        ("Sa", "Sam", "Sm", "2Sm"),
     )
     KINGS_1 = (
         11,
@@ -130,9 +132,9 @@ class Book(Enum):
         _build_book_regular_expression(
             _KINGS_REGULAR_EXPRESSION,
             prefix=_FIRST_BOOK,
-            suffix=r"\,\s+Commonly\s+Called\s+the\s+Third\s+Book\s+of\s+the\s+Kings|Primer\s+Libro\s+de\s+Reyes|Primeiro\s+Livro\s+de\s+Reis",
+            suffix=r"\,\s+Commonly\s+Called\s+the\s+Third\s+Book\s+of\s+the\s+Kings",
         ),
-        ("Kgs", "Ki", "Kin", "1 Kgs", "1 Ki", "1 Kin", "I Kgs", "I Ki", "I Kin", "1Re", "1R", "IRe", "IR"),
+        ("Re", "Rey", "Reis", "Reyes", "Kgs", "Kin", "Ki", "1Rs"),
     )
     KINGS_2 = (
         12,
@@ -140,9 +142,9 @@ class Book(Enum):
         _build_book_regular_expression(
             _KINGS_REGULAR_EXPRESSION,
             prefix=_SECOND_BOOK,
-            suffix=r"\,\s+Commonly\s+Called\s+the\s+Fourth\s+Book\s+of\s+the\s+Kings|Segundo\s+Libro\s+de\s+Reyes|Segundo\s+Livro\s+de\s+Reis",
+            suffix=r"\,\s+Commonly\s+Called\s+the\s+Fourth\s+Book\s+of\s+the\s+Kings",
         ),
-        ("Kgs", "Ki", "Kin", "2 Kgs", "2 Ki", "2 Kin", "II Kgs", "II Ki", "II Kin", "2Re", "2R", "IIRe", "IIR"),
+        ("Re", "Rey", "Reis", "Reyes", "Kgs", "Kin", "Ki", "2Rs"),
     )
     CHRONICLES_1 = (
         13,
@@ -151,7 +153,7 @@ class Book(Enum):
             _CHRONICLES_REGULAR_EXPRESSION,
             prefix=_FIRST_BOOK,
         ),
-        ("Ch", "Chr", "Chro", "Chron", "1 Chr", "1 Ch", "I Chr", "I Ch", "1Cr", "I Cr"),
+        ("Cr", "Crón", "Crôn", "Chron", "Chro", "Chr", "1Cr"),
     )
     CHRONICLES_2 = (
         14,
@@ -160,86 +162,85 @@ class Book(Enum):
             _CHRONICLES_REGULAR_EXPRESSION,
             prefix=_SECOND_BOOK,
         ),
-        ("Ch", "Chr", "Chro", "Chron", "2 Chr", "2 Ch", "II Chr", "II Ch", "2Cr", "II Cr"),
+        ("Cr", "Crón", "Crôn", "Chron", "Chro", "Chr", "2Cr"),
     )
-    EZRA = 15, "Ezra", r"Ezr\.*(?:a)?|Esdras|Esdr", ("Ezr", "Esd", "Ed")
-    NEHEMIAH = 16, "Nehemiah", r"Neh\.*(?:emiah)?|Nehemías|Neemias", ("Neh", "Ne")
-    ESTHER = 17, "Esther", r"Est\.*(?:h\.*)?(?:er)?|Ester", ("Est", "Esth", "Et")
-    JOB = 18, "Job", "Job|Jb|Jó", ("Job", "Jb", "Jó")
+    EZRA = 15, "Ezra", r"(Ezr\.*(?:a)?|Esd\.*|Esdras|Ed\.*)", ("Ezr", "Esd", "Ed")
+    NEHEMIAH = 16, "Nehemiah", r"(Neh\.*(?:emiah)?|Ne\.*|Neemias|Ne\.*)", ("Neh", "Ne")
+    ESTHER = 17, "Esther", r"(Est\.*(?:h\.*)?(?:er)?|Est\.*|Ester|Et\.*)", ("Est", "Esth", "Et")
+    JOB = 18, "Job", r"(Job|Jb\.*|Jó\.*)", ("Job", "Jb", "Jó")
     PSALMS = (
         19,
         "Psalms",
-        r"(Psalms|Psalm|Pslm\.*|Psa\.*|Psm\.*|Pss\.*|Ps\.*)|Salmos|Sal",
-        ("Ps", "Psa", "Pslm", "Psm", "Pss", "Sal"),
+        r"(Psalms|Psalm|Pslm\.*|Psa\.*|Psm\.*|Pss\.*|Ps\.*|Salmos|Sal\.*|Sl\.*)",
+        ("Ps", "Psa", "Pslm", "Psm", "Pss", "Sal", "Sl"),
     )
     PROVERBS = (
         20,
         "Proverbs",
-        r"(Proverbs|Prov\.*|Pro\.*|Prv\.*)|Proverbios|Provérbios",
-        ("Pro", "Prov", "Prv", "Pr"),
+        r"(Proverbs|Prov\.*|Pro\.*|Prv\.*|Proverbios|Prov\.*|Provérbios|Pv\.*)",
+        ("Pro", "Prov", "Prv", "Pv"),
     )
     ECCLESIASTES = (
         21,
         "Ecclesiastes",
-        r"(Ecclesiastes(?:\s+or\,\s+the\s+Preacher)?"
-        r"|Eccles\.*(?!iasticus?)"
-        r"|Eccle\.*(?!siasticus?)"
-        r"|Eccl\.*(?!esiasticus?)(?!us?)"
-        r"|Ecc\.*(?!lesiasticus?)(?!lus?)"
-        r"|(?<!Z)Ec\.*(?!clesiasticus?)(?!clus?)|Qoh\.*)|Eclesiastés|Eclesiastes",
-        ("Ec", "Ecc", "Eccl", "Eccle", "Eccles", "Qoh", "Ecl"),
+        r"(Ecclesiastes(?:\s+or\,\s+the\s+Preacher)?|Eclesiastés|Eclesiastes"
+        r"|Eccles\.*(?!iasticus?)|Ecles\.*"
+        r"|Eccle\.*(?!siasticus?)|Ecle\.*"
+        r"|Eccl\.*(?!esiasticus?)(?!us?)|Ecl\.*"
+        r"|Ecc\.*(?!lesiasticus?)(?!lus?)|Ec\.*|Ecl\.*|Qoh\.*)",
+        ("Ec", "Ecc", "Eccl", "Eccle", "Eccles", "Ecl", "Ecle", "Ecles", "Qoh"),
     )
     SONG_OF_SONGS = (
         22,
         "Song of Songs",
-        r"(Song(?: of (Solomon|Songs|Sol\.*))?)"
-        "|Canticles|(Canticle(?: of Canticles)?)|SOS|Cant|Cantares|Cant",
+        r"(Song(?: of (Solomon|Songs|Sol\.*))?|Cantar de los Cantares|Cânticos|Cantares|Ct\.*)"
+        r"|Canticles|(Canticle(?: of Canticles)?)|SOS|Cant",
         ("Cant", "Canticle", "Canticles", "Song", "Song of Sol", "SOS", "Ct"),
     )
-    ISAIAH = 23, "Isaiah", r"Isa\.*(?:iah)?|Isaías", ("Isa", "Is")
-    JEREMIAH = 24, "Jeremiah", r"Jer\.*(?:emiah)?|Jeremías|Jeremias", ("Jer", "Jr")
+    ISAIAH = 23, "Isaiah", r"(Isa\.*(?:iah)?|Isaias|Isa\.*|Is\.*)", ("Isa", "Is")
+    JEREMIAH = 24, "Jeremiah", r"(Jer\.*(?:emiah)?|Jeremias|Jer\.*|Je\.*|Jr\.*)", ("Jer", "Je", "Jr")
     LAMENTATIONS = (
         25,
         "Lamentations",
         _build_book_regular_expression(
-            r"Lam\.*(?:entations)?",
-            suffix=r"of\s+Jeremiah|de\s+Jeremías|de\s+Jeremias",
+            r"(Lam\.*(?:entations)?|Lamentaciones|Lamentações|Lam\.*|Lm\.*|Lá\.*)",
+            suffix=r"of\s+Jeremiah",
         ),
-        ("Lam", "Lm"),
+        ("Lam", "Lm", "Lá"),
     )
-    EZEKIEL = 26, "Ezekiel", r"(Ezekiel|Ezek\.*|Eze\.*|Ezk\.*)|Ezequiel", ("Eze", "Ezek", "Ezk", "Ez")
-    DANIEL = 27, "Daniel", r"Dan\.*(?:iel)?|Daniel", ("Dan", "Dn")
-    HOSEA = 28, "Hosea", r"Hos\.*(?:ea)?|Oseas|Oséias", ("Hos", "Os")
-    JOEL = 29, "Joel", r"Joe\.*(?:l)?|Joel", ("Joe", "Jl")
-    AMOS = 30, "Amos", r"Amo\.*(?:s)?|Amós", ("Amo", "Am")
-    OBADIAH = 31, "Obadiah", r"Oba\.*(?:d\.*(?:iah)?)?|Abdías|Obadias", ("Oba", "Obad", "Abd")
-    JONAH = 32, "Jonah", r"Jonah|Jon\.*|Jnh\.*|Jonás", ("Jnh", "Jon", "Jn")
-    MICAH = 33, "Micah", r"Mic\.*(?:ah)?|Miqueas|Miquéias", ("Mic", "Mq")
-    NAHUM = 34, "Nahum", r"(?<!Jo)Nah\.*(?:um)?|Nahúm", ("Nah", "Na")
-    HABAKKUK = 35, "Habakkuk", r"Hab\.*(?:akkuk)?|Habacuc|Habacuque", ("Hab", "Hb")
-    ZEPHANIAH = 36, "Zephaniah", r"Zep\.*(?:h\.*(?:aniah)?)?|Sofonías|Sofonias", ("Zep", "Zeph", "Sf")
-    HAGGAI = 37, "Haggai", r"Hag\.*(?:gai)?|Hageo|Ageu", ("Hag", "Ag")
-    ZECHARIAH = 38, "Zechariah", r"Zec\.*(?:h\.*(?:ariah)?)?|Zacarías|Zacarias", ("Zec", "Zech", "Zc")
-    MALACHI = 39, "Malachi", r"Mal\.*(?:achi)?|Malaquías|Malaquias", ("Mal", "Ml")
-    MATTHEW = 40, "Matthew", r"Mat\.*(?:t\.*(?:hew)?)?|Mateo|Mateus", ("Mat", "Matt", "Mt")
-    MARK = 41, "Mark", r"Mark|Mar\.*|Mrk\.*|Marcos|Marcos", ("Mar", "Mrk", "Mc")
-    LUKE = 42, "Luke", r"Luk\.*(?:e)?|Lucas", ("Luk", "Lc")
+    EZEKIEL = 26, "Ezekiel", r"(Ezekiel|Ezequiel|Eze\.*|Ezq\.*|Ezk\.*|Ez\.*)", ("Eze", "Ezq", "Ezk", "Ez")
+    DANIEL = 27, "Daniel", r"(Dan\.*(?:iel)?|Dan\.*|Dn\.*)", ("Dan", "Dn")
+    HOSEA = 28, "Hosea", r"(Hos\.*(?:ea)?|Oseas|Os\.*|O\.*)", ("Hos", "Os", "O")
+    JOEL = 29, "Joel", r"(Joe\.*(?:l)?|Joel|Jl\.*)", ("Joe", "Jl")
+    AMOS = 30, "Amos", r"(Amo\.*(?:s)?|Amós|Am\.*)", ("Amo", "Am")
+    OBADIAH = 31, "Obadiah", r"(Oba\.*(?:d\.*(?:iah)?)?|Abdías|Obd\.*|Abd\.*|Ob\.*|Ab\.*)", ("Oba", "Obd", "Abd", "Ob", "Ab")
+    JONAH = 32, "Jonah", r"(Jonah|Jon\.*|Jnh\.*|Jonás|Jn\.*|Jnh\.*)", ("Jnh", "Jon", "Jn")
+    MICAH = 33, "Micah", r"(Mic\.*(?:ah)?|Miqueas|Mi\.*|Mq\.*)", ("Mic", "Mi", "Mq")
+    NAHUM = 34, "Nahum", r"(?<!Jo)(Nah\.*(?:um)?|Nahúm|Na\.*)", ("Nah", "Na")
+    HABAKKUK = 35, "Habakkuk", r"(Hab\.*(?:akkuk)?|Habacuc|Hab\.*|Hb\.*|Hc\.*)", ("Hab", "Hb", "Hc")
+    ZEPHANIAH = 36, "Zephaniah", r"(Zep\.*(?:h\.*(?:aniah)?)?|Sofonías|Zefanias|Sof\.*|Zef\.*|Sf\.*|Zp\.*)", ("Zep", "Sof", "Zef", "Sf", "Zp")
+    HAGGAI = 37, "Haggai", r"(Hag\.*(?:gai)?|Ageo|Ag\.*|Hg\.*)", ("Hag", "Ag", "Hg")
+    ZECHARIAH = 38, "Zechariah", r"(Zec\.*(?:h\.*(?:ariah)?)?|Zacarías|Zacarias|Zac\.*|Zc\.*)", ("Zec", "Zac", "Zc")
+    MALACHI = 39, "Malachi", r"(Mal\.*(?:achi)?|Malaquías|Malaquias|Mal\.*|Ml\.*)", ("Mal", "Ml")
+    MATTHEW = 40, "Matthew", r"(Mat\.*(?:t\.*(?:hew)?)?|Mateo|Mat\.*|Mt\.*)", ("Mat", "Matt", "Mt")
+    MARK = 41, "Mark", r"(Mark|Mar\.*|Mrk\.*|Marcos|Mr\.*|Mc\.*)", ("Mar", "Mrk", "Mr", "Mc")
+    LUKE = 42, "Luke", r"(Luk\.*(?:e)?|Lucas|Luc\.*|Lc\.*)", ("Luk", "Luc", "Lc")
     JOHN = (
         43,
         "John",
-        rf"(?<!(?:1|2|3|I)\s)(?<!(?:1|2|3|I)){_JOHN_REGULAR_EXPRESSION}|Juan|João",
-        ("Jhn", "Jn", "Jo", "Joh", "J"),
+        rf"(?<!(?:1|2|3|I)\s)(?<!(?:1|2|3|I)){_JOHN_REGULAR_EXPRESSION}",
+        ("Jhn", "Jn", "Jo", "Joh"),
     )
     ACTS = (
         44,
         "Acts",
         _build_book_regular_expression(
-            r"Act\.*(?:s)?",
-            suffix="of the Apostles|de los Apóstoles|dos Apóstolos",
+            r"(Act\.*(?:s)?|Hechos|Atos|Act\.*|He\.*|At\.*)",
+            suffix="of the Apostles",
         ),
-        ("Act", "Hechos", "Atos", "Hch"),
+        ("Act", "He", "At"),
     )
-    ROMANS = 45, "Romans", r"Rom\.*(?:ans)?|Romanos", ("Rom", "Rm")
+    ROMANS = 45, "Romans", r"(Rom\.*(?:ans)?|Romanos|Rom\.*|Rm\.*)", ("Rom", "Rm")
     CORINTHIANS_1 = (
         46,
         "1 Corinthians",
@@ -247,7 +248,7 @@ class Book(Enum):
             _CORINTHIANS_REGULAR_EXPRESSION,
             prefix=_FIRST_PAUL_EPISTLE,
         ),
-        ("Co", "Cor", "1 Cor", "I Cor", "1Co", "ICo"),
+        ("Co", "Cor", "1Co"),
     )
     CORINTHIANS_2 = (
         47,
@@ -256,17 +257,17 @@ class Book(Enum):
             _CORINTHIANS_REGULAR_EXPRESSION,
             prefix=_SECOND_PAUL_EPISTLE,
         ),
-        ("Co", "Cor", "2 Cor", "II Cor", "2Co", "IICo"),
+        ("Co", "Cor", "2Co"),
     )
-    GALATIANS = 48, "Galatians", r"Gal\.*(?:atians)?|Gálatas", ("Gal", "Gl")
-    EPHESIANS = 49, "Ephesians", r"(?<!Z)Eph\.*(?:es\.*(?:ians)?)?|Efesios|Efésios", ("Eph", "Ef")
+    GALATIANS = 48, "Galatians", r"(Gal\.*(?:atians)?|Gálatas|Gal\.*|Gl\.*)", ("Gal", "Gl")
+    EPHESIANS = 49, "Ephesians", r"(?<!Z)(Eph\.*(?:es\.*(?:ians)?)?|Efesios|Efésios|Efe\.*|Ef\.*)", ("Eph", "Ephes", "Efe", "Ef")
     PHILIPPIANS = (
         50,
         "Philippians",
-        r"Ph(?:(p\.*)|(?:il\.*(?!e\.*(?:m\.*(?:on)?)?)(?:ippians)?))|Filipenses|Filipenses",
-        ("Php", "Phil", "Fl"),
+        r"(Ph(?:(p\.*)|(?:il\.*(?!e\.*(?:m\.*(?:on)?)?)(?:ippians)?)|Filipenses|Flp\.*|Fp\.*))",
+        ("Php", "Phil", "Flp", "Fp"),
     )
-    COLOSSIANS = 51, "Colossians", r"Col\.*(?:ossians)?|Colosenses|Colossenses", ("Col", "Cl")
+    COLOSSIANS = 51, "Colossians", r"(Col\.*(?:ossians)?|Colosenses|Colossenses|Col\.*|Cl\.*)", ("Col", "Cl")
     THESSALONIANS_1 = (
         52,
         "1 Thessalonians",
@@ -274,7 +275,7 @@ class Book(Enum):
             _THESSALONIANS_REGULAR_EXPRESSION,
             prefix=_FIRST_PAUL_EPISTLE,
         ),
-        ("Th", "Thes", "Thess", "Ths", "1 Th", "1Th", "I Th", "ITh"),
+        ("Th", "Thes", "Thess", "Ths", "1Ts"),
     )
     THESSALONIANS_2 = (
         53,
@@ -283,7 +284,7 @@ class Book(Enum):
             _THESSALONIANS_REGULAR_EXPRESSION,
             prefix=_SECOND_PAUL_EPISTLE,
         ),
-        ("Th", "Thes", "Thess", "Ths", "2 Th", "2Th", "II Th", "IITh"),
+        ("Th", "Thes", "Thess", "Ths", "2Ts"),
     )
     TIMOTHY_1 = (
         54,
@@ -292,7 +293,7 @@ class Book(Enum):
             _TIMOTHY_REGULAR_EXPRESSION,
             prefix=_FIRST_PAUL_EPISTLE,
         ),
-        ("Ti", "Tim", "1 Ti", "1Ti", "I Ti", "ITi"),
+        ("Ti", "Tim", "1Tm"),
     )
     TIMOTHY_2 = (
         55,
@@ -301,17 +302,17 @@ class Book(Enum):
             _TIMOTHY_REGULAR_EXPRESSION,
             prefix=_SECOND_PAUL_EPISTLE,
         ),
-        ("Ti", "Tim", "2 Ti", "2Ti", "II Ti", "IITi"),
+        ("Ti", "Tim", "2Tm"),
     )
-    TITUS = 56, "Titus", r"Tit\.*(?:us)?|Tito", ("Tit", "Tt")
+    TITUS = 56, "Titus", r"(Tit\.*(?:us)?|Tito|Tit\.*|Tt\.*)", ("Tit", "Tt")
     PHILEMON = (
         57,
         "Philemon",
-        r"(Philemon|Philem\.*|Phile\.*|Phlm\.*|Phi\.*(?!l)|Phm\.*)|Filemón|Filemom",
-        ("Phi", "Phile", "Philem", "Phlm", "Phm", "Fl"),
+        r"(Philemon|Philem\.*|Phile\.*|Phlm\.*|Phi\.*(?!l)|Phm\.*|Filemón|Filemon|Flm\.*|Fm\.*)",
+        ("Phi", "Phile", "Philem", "Phlm", "Phm", "Flm", "Fm"),
     )
-    HEBREWS = 58, "Hebrews", r"Heb\.*(?:rews)?|Hebreos|Hebreus", ("Heb", "Hb")
-    JAMES = 59, "James", r"Ja(?:me)?s\.*|Santiago|Tiago", ("Jas", "Stg", "Tg")
+    HEBREWS = 58, "Hebrews", r"(Heb\.*(?:rews)?|Hebreos|Hebreus|Heb\.*|Hb\.*)", ("Heb", "Hb")
+    JAMES = 59, "James", r"(Ja(?:me)?s\.*|Santiago|Tiago|San\.*|Stg\.*|Tg\.*)", ("Jas", "San", "Stg", "Tg")
     PETER_1 = (
         60,
         "1 Peter",
@@ -319,7 +320,7 @@ class Book(Enum):
             _PETER_REGULAR_EXPRESSION,
             prefix=_FIRST_GENERAL_EPISTLE,
         ),
-        ("Pe", "Pet", "Pt", "1 Pe", "1Pe", "I Pe", "IPe"),
+        ("Pe", "Pet", "Pt", "1Pe"),
     )
     PETER_2 = (
         61,
@@ -328,7 +329,7 @@ class Book(Enum):
             _PETER_REGULAR_EXPRESSION,
             prefix=_SECOND_GENERAL_EPISTLE,
         ),
-        ("Pe", "Pet", "Pt", "2 Pe", "2Pe", "II Pe", "IIPe"),
+        ("Pe", "Pet", "Pt", "2Pe"),
     )
     JOHN_1 = (
         62,
@@ -337,7 +338,7 @@ class Book(Enum):
             _JOHN_REGULAR_EXPRESSION,
             prefix=_FIRST_GENERAL_EPISTLE,
         ),
-        ("Jhn", "Jn", "Jo", "Joh", "1 John", "1Jo", "I John", "IJo"),
+        ("Jhn", "Jn", "Jo", "Joh", "1Jo"),
     )
     JOHN_2 = (
         63,
@@ -346,7 +347,7 @@ class Book(Enum):
             _JOHN_REGULAR_EXPRESSION,
             prefix=_SECOND_GENERAL_EPISTLE,
         ),
-        ("Jhn", "Jn", "Jo", "Joh", "2 John", "2Jo", "II John", "IIJo"),
+        ("Jhn", "Jn", "Jo", "Joh", "2Jo"),
     )
     JOHN_3 = (
         64,
@@ -355,15 +356,15 @@ class Book(Enum):
             _JOHN_REGULAR_EXPRESSION,
             prefix=_THIRD_GENERAL_EPISTLE,
         ),
-        ("Jhn", "Jn", "Jo", "Joh", "3 John", "3Jo", "III John", "IIIJo"),
+        ("Jhn", "Jn", "Jo", "Joh", "3Jo"),
     )
-    JUDE = 65, "Jude", r"Jud\.*(:?e)?(?!ges)|Judas", ("Jud", "Jd")
+    JUDE = 65, "Jude", r"(Jud\.*(:?e)?(?!ges)|Judas|Jd\.*)", ("Jud", "Jd")
     REVELATION = (
         66,
         "Revelation",
         _build_book_regular_expression(
-            r"Rev\.*(?:elation)?",
-            suffix="of ((Jesus Christ)|John|(St. John the Divine))|Apocalipsis|Apocalipse",
+            r"(Rev\.*(?:elation)?|Apocalipsis|Apocalipse|Rev\.*|Ap\.*)",
+            suffix="of ((Jesus Christ)|John|(St. John the Divine))",
         ),
         ("Rev", "Ap"),
     )
@@ -374,20 +375,20 @@ class Book(Enum):
             r"(Esdras|Esdr\.*|Esd\.*|Es\.*)",
             _FIRST,
         ),
-        ("Es", "Esd", "Esdr", "1 Esd", "1Es", "I Esd", "IEs"),
+        ("Es", "Esd", "Esdr"),
     )
-    TOBIT = 68, "Tobit", r"(Tobit|Tob\.*|Tb\.*|Tobías|Tobias)", ("Tb", "Tob")
+    TOBIT = 68, "Tobit", r"(Tobit|Tob\.*|Tb\.*|Tobías|Tobias|Tb\.*)", ("Tb", "Tob")
     WISDOM_OF_SOLOMON = (
         69,
         "Wisdom of Solomon",
-        r"(Wisdom of Solomon|Wisdom|Wisd\.* of Sol\.*|Wis\.*|(?<!Hebre)Ws\.*)|Sabiduría|Sabedoria",
-        ("Wis", "Wisd of Sol", "Ws", "Sb"),
+        r"(Wisdom of Solomon|Wisdom|Sabiduría|Sabedoria|Wisd\.* of Sol\.*|Wis\.*|(?<!Hebre)Ws\.*)",
+        ("Wis", "Wisd of Sol", "Ws", "Sab", "Sb"),
     )
     ECCLESIASTICUS = (
         70,
         "Ecclesiasticus",
-        r"(Sirach|Sir\.*|Ecclesiasticus|Ecclus\.*)|Eclesiástico|Sirácida",
-        ("Ecclus", "Sir", "Eclo"),
+        r"(Sirach|Sir\.*|Eclesiástico|Eclesiástico|Ecclesiasticus|Ecclus\.*)",
+        ("Ecclus", "Sir", "Eclo", "Ecl"),
     )
     MACCABEES_1 = (
         71,
@@ -396,7 +397,7 @@ class Book(Enum):
             _MACCABEES_REGULAR_EXPRESSION,
             _FIRST,
         ),
-        ("M", "Ma", "Mac", "Macc", "1 Ma", "1Ma", "I Ma", "IMa"),
+        ("M", "Ma", "Mac", "Macc"),
     )
     MACCABEES_2 = (
         72,
@@ -405,5 +406,5 @@ class Book(Enum):
             _MACCABEES_REGULAR_EXPRESSION,
             _SECOND,
         ),
-        ("M", "Ma", "Mac", "Macc", "2 Ma", "2Ma", "II Ma", "IIMa"),
+        ("M", "Ma", "Mac", "Macc"),
     )
