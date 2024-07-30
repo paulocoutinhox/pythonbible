@@ -26,8 +26,8 @@ _KINGS_REGULAR_EXPRESSION = r"(Kings|Kgs\.*|Kin\.*|Ki\.*|Reyes|Reis|Re\.*|Rs\.*)
 _CHRONICLES_REGULAR_EXPRESSION = r"(Chronicles|Chron\.*|Chro\.*|Chr\.*|Crónicas|Crônicas|Cr\.*)"
 _JOHN_REGULAR_EXPRESSION = r"(John|Joh\.*|Jhn\.*|Jo\.*(?!shua|b|nah|el)|Jn\.*|Juan|João|Jn\.*)"
 _CORINTHIANS_REGULAR_EXPRESSION = r"(Corinthians|Corintios|Coríntios|Co\.*)"
-_THESSALONIANS_REGULAR_EXPRESSION = r"(Thessalonians|Tesalonicenses|Tessalonicenses|Th\.*)"
-_TIMOTHY_REGULAR_EXPRESSION = r"(Timothy|Timoteo|Timóteo|Ti\.*)"
+_THESSALONIANS_REGULAR_EXPRESSION = r"(Thessalonians|Tesalonicenses|Tessalonicenses|Th\.*|Ts\.*)"
+_TIMOTHY_REGULAR_EXPRESSION = r"(Timothy|Timoteo|Timóteo|Ti\.*|Tm\.*)"
 _PETER_REGULAR_EXPRESSION = r"(Peter|Pedro|Pe\.*|Pt\.*)"
 
 _MACCABEES_REGULAR_EXPRESSION = r"(Maccabees|Macabeos|Macabeus|Ma\.*|M\.*)"
@@ -99,7 +99,7 @@ class Book(Enum):
         return self._abbreviations_
 
     GENESIS = 1, "Genesis", r"(Gen\.*(?:esis)?|Gén\.*(?:esis)?|Gên\.*(?:esis)?|Gn\.*)", ("Gen", "Gn")
-    EXODUS = 2, "Exodus", r"(Exo\.*(?:d\.*)?(?:us)?|Éxo\.*(?:do)?|Êxo\.*(?:do)?|Éx|Ex\.*)", ("Exo", "Exod", "Éx", "Ex")
+    EXODUS = 2, "Exodus", r"(Exo\.*(?:d\.*)?(?:us)?|Éxo\.*(?:do)?|Êxo\.*(?:do)?|Éx|Êx|Ex\.*)", ("Exo", "Exod", "Éx", "Êx", "Ex")
     LEVITICUS = 3, "Leviticus", r"(Lev\.*(?:iticus)?|Lev\.*(?:ítico)?|Lv\.*)", ("Lev", "Lv")
     NUMBERS = 4, "Numbers", r"(Num\.*(?:bers)?|Num\.*(?:eros)?|Núm\.*|Nm\.*)", ("Num", "Núm", "Nm")
     DEUTERONOMY = 5, "Deuteronomy", r"(Deu\.*(?:t\.*)?(?:eronomy)?|Deu\.*(?:teronomio)?|Dt\.*)", ("Deu", "Deut", "Dt")
@@ -264,7 +264,7 @@ class Book(Enum):
     PHILIPPIANS = (
         50,
         "Philippians",
-        r"(Ph(?:(p\.*)|(?:il\.*(?!e\.*(?:m\.*(?:on)?)?)(?:ippians)?)|Filipenses|Flp\.*|Fp\.*))",
+        r"(Ph(?:(p\.*)|(?:il\.*(?!e\.*(?:m\.*(?:on)?)?)(?:ippians)?))|Filipenses|Flp\.*|Fp\.*)",
         ("Php", "Phil", "Flp", "Fp"),
     )
     COLOSSIANS = 51, "Colossians", r"(Col\.*(?:ossians)?|Colosenses|Colossenses|Col\.*|Cl\.*)", ("Col", "Cl")
