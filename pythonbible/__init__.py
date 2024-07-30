@@ -10,7 +10,6 @@ from __future__ import annotations
 
 __version__ = "0.13.1"
 
-from .bible.bible import Bible
 from .book_groups import BOOK_GROUPS
 from .book_groups import BookGroup
 from .books import Book
