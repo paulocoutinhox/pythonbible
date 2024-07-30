@@ -210,7 +210,7 @@ class Book(Enum):
     )
     EZEKIEL = 26, "Ezekiel", r"(Ezekiel|Ezequiel|Eze\.*|Ezq\.*|Ezk\.*|Ez\.*)", ("Eze", "Ezq", "Ezk", "Ez")
     DANIEL = 27, "Daniel", r"(Dan\.*(?:iel)?|Dan\.*|Dn\.*)", ("Dan", "Dn")
-    HOSEA = 28, "Hosea", r"(Hos\.*(?:ea)?|Oseas|Os\.*|O\.*)", ("Hos", "Os", "O")
+    HOSEA = 28, "Hosea", r"(Hos\.*(?:ea)?|Oseas|Os\.*)", ("Hos", "Os", "O")
     JOEL = 29, "Joel", r"(Joe\.*(?:l)?|Joel|Jl\.*)", ("Joe", "Jl")
     AMOS = 30, "Amos", r"(Amo\.*(?:s)?|Amós|Am\.*)", ("Amo", "Am")
     OBADIAH = 31, "Obadiah", r"(Oba\.*(?:d\.*(?:iah)?)?|Abdías|Obd\.*|Abd\.*|Ob\.*|Ab\.*)", ("Oba", "Obd", "Abd", "Ob", "Ab")

@@ -40,7 +40,7 @@ def get_references(
     references: list[NormalizedReference] = []
 
     # First replace all roman numerals in the text with integers.
-    clean_text: str = convert_all_roman_numerals_to_integers(text)
+    clean_text: str = text#convert_all_roman_numerals_to_integers(text)
     clean_text = clean_text.replace(HTML_NDASH, DASH).replace(HTML_MDASH, DASH)
 
     for reference_match in re.finditer(
