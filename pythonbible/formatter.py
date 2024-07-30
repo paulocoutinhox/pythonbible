@@ -5,9 +5,6 @@ from functools import lru_cache
 from typing import TYPE_CHECKING
 from typing import Any
 
-from pythonbible.bible.bibles import get_bible
-from pythonbible.bible.titles import LONG_TITLES
-from pythonbible.bible.titles import SHORT_TITLES
 from pythonbible.converter import convert_references_to_verse_ids
 from pythonbible.converter import convert_verse_ids_to_references
 from pythonbible.errors import MissingBookFileError
@@ -187,13 +184,14 @@ def _get_book_title(book: Book, include_books: bool = True, **kwargs: Any) -> st
 
     version: Version = kwargs.get("version", DEFAULT_VERSION)
     full_title: bool = kwargs.get("full_title", False)
-    version_book_titles: BookTitles = get_book_titles(book, version)
+    return book.name
+    # version_book_titles: BookTitles = get_book_titles(book, version)
 
-    return (
-        version_book_titles.long_title
-        if full_title
-        else version_book_titles.short_title
-    )
+    # return (
+    #     version_book_titles.long_title
+    #     if full_title
+    #     else version_book_titles.short_title
+    # )
 
 
 def _get_start_chapter(
@@ -322,135 +320,3 @@ def _does_reference_include_all_verses_in_end_book(
         return False
 
     return reference.end_verse == get_number_of_verses(reference.end_book, max_chapters)
-
-
-def format_scripture_text(verse_ids: list[int], **kwargs: Any) -> str:
-    """Return the formatted scripture text for the given list of verse IDs.
-
-    :param verse_ids: A list of integer verse ids
-    :type verse_ids: list[int]
-    :return: The formatted scripture text for the verse ids
-    :rtype: str
-    """
-    one_verse_per_paragraph: bool = kwargs.get("one_verse_per_paragraph", False)
-    full_title: bool = kwargs.get("full_title", False)
-    format_type: str = kwargs.get("format_type", "html")
-    include_verse_numbers: bool = kwargs.get("include_verse_numbers", True)
-    version: Version = kwargs.get("version", DEFAULT_VERSION)
-
-    is_html: bool = format_type == "html"
-
-    bible_type = "html" if is_html else "plain_text"
-
-    if not include_verse_numbers:
-        bible_type += "_readers"
-
-    bible = get_bible(version, bible_type)
-
-    verse_ids.sort()
-    text: str = ""
-    current_book: Book | None = None
-    current_chapter: int | None = None
-    current_start_verse: int | None = None
-    current_end_verse: int | None = None
-
-    for verse_id in verse_ids:
-        book, chapter_number, verse_number = get_book_chapter_verse(verse_id)
-
-        if (
-            one_verse_per_paragraph
-            or current_end_verse is None
-            or verse_id - current_end_verse > 1
-        ):
-            if current_start_verse and current_end_verse:
-                verse_text = bible.get_scripture(current_start_verse, current_end_verse)
-                text += _format_paragraph(verse_text)
-
-            current_start_verse = verse_id
-
-        current_end_verse = verse_id
-
-        if book != current_book:
-            current_book = book
-            current_chapter = chapter_number
-            version_book_titles: BookTitles = get_book_titles(book, version)
-            title: str = (
-                version_book_titles.long_title
-                if full_title
-                else version_book_titles.short_title
-            )
-            text += _format_title(title, is_html, not text)
-            text += _format_chapter(chapter_number, is_html)
-        elif chapter_number != current_chapter:
-            current_chapter = chapter_number
-            text += _format_chapter(chapter_number, is_html)
-
-    if current_start_verse and current_end_verse:
-        verse_text = bible.get_scripture(current_start_verse, current_end_verse)
-        text += _format_paragraph(verse_text)
-
-    return text
-
-
-def _format_title(title: str, is_html: bool, is_first_book: bool) -> str:
-    if is_html:
-        return f"<h1>{title}</h1>\n"
-
-    return f"{title}\n\n" if is_first_book else f"\n\n{title}\n\n"
-
-
-def _format_chapter(chapter: int, is_html: bool) -> str:
-    return f"<h2>Chapter {chapter}</h2>\n" if is_html else f"Chapter {chapter}\n\n"
-
-
-def _format_paragraph(paragraph: str) -> str:
-    return f"{paragraph}\n"
-
-
-@lru_cache()
-def get_verse_text(verse_id: int, version: Version = DEFAULT_VERSION) -> str:
-    """Return the scripture text of the given verse id and version of the Bible.
-
-    :param verse_id: a verse id
-    :type verse_id: int
-    :param version: a version of the Bible, defaults to American Standard
-    :type version: Version
-    :return: The scripture text of the given verse id and version
-    :rtype: str
-    :raises InvalidVerseError: if the given verse id does not correspond to a valid
-                               verse
-    :raises MissingVerseFileError: if the verse file for the given verse_id and version
-                                   does not exist
-    """
-    bible = get_bible(version, "plain_text_readers")
-    return bible.get_scripture(verse_id, verse_id)
-
-
-@lru_cache()
-def get_book_titles(book: Book, version: Version = DEFAULT_VERSION) -> BookTitles:
-    """Return the book titles for the given Book and optional Version.
-
-    :param book: a book of the Bible
-    :type book: Book
-    :param version: a version of the Bible, defaults to American Standard
-    :type version: Version
-    :return: the long and short titles of the given book and version
-    :rtype: BookTitles
-    :raises MissingBookFileError: if the book file for the given book and version does
-                                  not exist
-    """
-    short_titles, long_titles = _get_version_book_titles(version)
-    short_title = short_titles.get(book, book.title)
-    long_title = long_titles.get(book, book.title)
-
-    return BookTitles(long_title, short_title)
-
-
-@lru_cache()
-def _get_version_book_titles(
-    version: Version,
-) -> tuple[dict[Book, str], dict[Book, str]]:
-    try:
-        return SHORT_TITLES[version], LONG_TITLES[version]
-    except KeyError as key_error:
-        raise MissingBookFileError(key_error) from key_error
