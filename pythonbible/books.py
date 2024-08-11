@@ -217,7 +217,7 @@ class Book(Enum):
     JONAH = 32, "Jonah", r"^(Jonah|Jon\.*|Jnh\.*|Jonás|Jn\.*|Jnh\.*)", ("Jnh", "Jon", "Jn")
     MICAH = 33, "Micah", r"^(Mic\.*(?:ah)?|Miqueas|Mi\.*|Mq\.*)", ("Mic", "Mi", "Mq")
     NAHUM = 34, "Nahum", r"^(?<!Jo)(Nah\.*(?:um)?|Nahúm|Na\.*)", ("Nah", "Na")
-    HABAKKUK = 35, "Habakkuk", r"^(Hab\.*(?:akkuk)?|Habacuc|Hab\.*|Hb\.*|Hc\.*)", ("Hab", "Hb", "Hc")
+    HABAKKUK = 35, "Habakkuk", r"^(Hab\.*(?:akkuk)?|Habacuc|Hab\.*|Hc\.*)", ("Hab", "Hc")
     ZEPHANIAH = 36, "Zephaniah", r"^(Zep\.*(?:h\.*(?:aniah)?)?|Sofonías|Zefanias|Sof\.*|Zef\.*|Sf\.*|Zp\.*)", ("Zep", "Sof", "Zef", "Sf", "Zp")
     HAGGAI = 37, "Haggai", r"^(Hag\.*(?:gai)?|Ageo|Ag\.*|Hg\.*)", ("Hag", "Ag", "Hg")
     ZECHARIAH = 38, "Zechariah", r"^(Zec\.*(?:h\.*(?:ariah)?)?|Zacarías|Zacarias|Zac\.*|Zc\.*)", ("Zec", "Zac", "Zc")
